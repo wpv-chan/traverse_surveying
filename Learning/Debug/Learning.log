@@ -1,18 +1,6 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(510,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Learning.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   main.cpp
-C:\Users\35588\source\repos\traverse_surveying\Learning\main.cpp(260,23): warning C4101: 'sum': unreferenced local variable
-C:\Users\35588\source\repos\traverse_surveying\Learning\main.cpp(260,41): warning C4101: 'correct_d_y': unreferenced local variable
-C:\Users\35588\source\repos\traverse_surveying\Learning\main.cpp(260,18): warning C4101: 'f_y': unreferenced local variable
-C:\Users\35588\source\repos\traverse_surveying\Learning\main.cpp(260,13): warning C4101: 'f_x': unreferenced local variable
-C:\Users\35588\source\repos\traverse_surveying\Learning\main.cpp(258,56): warning C4101: 'end_position': unreferenced local variable
-C:\Users\35588\source\repos\traverse_surveying\Learning\main.cpp(257,42): warning C4101: 'y': unreferenced local variable
-C:\Users\35588\source\repos\traverse_surveying\Learning\main.cpp(261,14): warning C4101: 'lx': unreferenced local variable
-C:\Users\35588\source\repos\traverse_surveying\Learning\main.cpp(260,3): warning C4101: 'C_x': unreferenced local variable
-C:\Users\35588\source\repos\traverse_surveying\Learning\main.cpp(257,39): warning C4101: 'x': unreferenced local variable
-C:\Users\35588\source\repos\traverse_surveying\Learning\main.cpp(260,28): warning C4101: 'correct_d_x': unreferenced local variable
-C:\Users\35588\source\repos\traverse_surveying\Learning\main.cpp(259,3): warning C4101: 'correct_every_position': unreferenced local variable
-C:\Users\35588\source\repos\traverse_surveying\Learning\main.cpp(261,18): warning C4101: 'ly': unreferenced local variable
-C:\Users\35588\source\repos\traverse_surveying\Learning\main.cpp(260,8): warning C4101: 'C_y': unreferenced local variable
   traverse_survey.cpp
   Generating Code...
+  LINK : C:\Users\35588\source\repos\traverse_surveying\Debug\traverse_surveying.exe not found or not built by the last incremental link; performing full link
   Learning.vcxproj -> C:\Users\35588\source\repos\traverse_surveying\Debug\traverse_surveying.exe

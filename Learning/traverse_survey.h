@@ -14,10 +14,10 @@ public:
 	void sum_distance(int N, double* distance, double& sum);//求导线的总长
 	void Angle_position(double start_positon, int N, double* Decimal_degrees, double* every_position);//求每一站的坐标方位角
 	void Correct_Angle_position(int N, double* every_position, double end_position, double* correct_every_position);//改正后的每一站的坐标方位角
-	void d_x_y(double N, double* distance, double* correct_every_position, double* d_x, double* d_y);//求d_x_y的值
-	void f_x(double N, double* d_x, double A_x, double C_x, double& f_x);//求f_x
-	void f_y(double N, double* d_y, double A_y, double C_y, double& f_y); //求f_y
-	void f_s(double sum, double f_x, double f_y); //求全长闭合差和全长相对闭合差
+	void d_x_y(int N, double* distance, double* correct_every_position, double* d_x, double* d_y);//求d_x_y的值
+	void Cf_x(int N, double* d_x, double A_x, double C_x, double& f_x);//求f_x
+	void Cf_y(int N, double* d_y, double A_y, double C_y, double& f_y); //求f_y
+	void Cf_s(double sum, double f_x, double f_y); //求全长闭合差和全长相对闭合差
 	void Correct_d_x_y(int N, double* d_x, double* d_y, double* distance, double sum, double f_x, double f_y, double* correct_d_x, double* correct_d_y);//求改正之后的d_x_y
 	void x_y(int N, double A_x, double A_y, double* correct_d_x, double* correct_d_y, long double* lx, long double* ly);//求x,y;
 
