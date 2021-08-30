@@ -177,7 +177,7 @@ void traverse_survey::Cf_s(double sum, double f_x, double f_y)
 //-------------------------求改正之后的d_x_y----------------------//
 //N----------------------------站数
 //*d_x-------------------------每一站的d_x的值
-// *d_y------------------------每一站的d_y的值
+//*d_y-------------------------每一站的d_y的值
 //*distance--------------------每一站的距离
 //sum--------------------------导线的总长
 //f_x--------------------------f_x的值
@@ -191,10 +191,10 @@ void traverse_survey::Correct_d_x_y(int N, double* d_x, double* d_y, double* dis
 		temp_x[i] = f_x * (distance[i] / sum);
 		temp_y[i] = f_y * (distance[i] / sum);
 		cout << "-----------------------------------------------------------------" << endl;
-		cout << "第" << i + 1 << "个的" << "改正数—----—d_x和d_y的值为：" << temp_x[i] << "  ||  " << temp_y[i] << endl;
+		cout << "第" << i + 1 << "个的" << "改正数d_x和d_y的值为：" << temp_x[i] << ", " << temp_y[i] << endl;
 		correct_d_x[i] = d_x[i] - temp_x[i];
 		correct_d_y[i] = d_y[i] - temp_y[i];
-		cout << "第" << i + 1 << "个的" << "改正之后的——d_x和d_y的值为：" << correct_d_x[i] << "  ||  " << correct_d_y[i] << endl;
+		cout << "第" << i + 1 << "个的" << "改正之后的dx和dy的值为：" << correct_d_x[i] << ", " << correct_d_y[i] << endl;
 	}
 }
 //-------------------------------------求x,y--------------------------------//;
@@ -219,7 +219,7 @@ void traverse_survey::x_y(int N, double A_x, double A_y, double* correct_d_x, do
 			x[i] = x[i - 1] + correct_d_x[i];
 			y[i] = y[i - 1] + correct_d_y[i];
 		}
-		cout << i + 1 << "号测站的坐标为 " << fixed << setprecision(4) << x[i] << ", " << y[i] << endl;
+		cout << i + 1 << "号测站的坐标为 " << x[i] << ", " << y[i] << endl;
 
 	}
 }
@@ -279,6 +279,8 @@ int main()
 	s = new double[N];
 	m = new double[N];
 	d = new double[N];
+
+	cout << fixed << setprecision(4);
 
 	while(1)
 	{
