@@ -262,27 +262,29 @@ int main()
 
 	traverse_survey ts;
 
+	cout << "输入需要计算的测站数(数据数)" << endl;
+	cin >> N;
+
+	//initialize
+	distance = new double[N];
+	Decimal_degrees = new double[N];
+	every_position = new double[N];
+	correct_every_position = new double[N];
+	correct_d_x = new double[N];
+	correct_d_y = new double[N];
+	d_x = new double[N];
+	d_y = new double[N];
+	lx = new long double[N];
+	ly = new long double[N];
+	s = new double[N];
+	m = new double[N];
+	d = new double[N];
+
 	while(1)
 	{
-		cout << "输入需要计算的测站数(数据数)" << endl;
-		cin >> N;
 
-		//initialize
-		distance = new double[N];
-		Decimal_degrees = new double[N];
-		every_position = new double[N];
-		correct_every_position = new double[N];
-		correct_d_x = new double[N];
-		correct_d_y = new double[N];
-		d_x = new double[N];
-		d_y = new double[N];
-		lx = new long double[N];
-		ly = new long double[N];
-		s = new double[N];
-		m = new double[N];
-		d = new double[N];
 		cout << "输入选项对应的数字：" << endl;
-		cout << "1. 度的六十进制转十进制\n2. 度的十进制转六十进制\n3. 求三角函数值\n"
+		cout << "0. 修改测站数(数据数)\n1. 度的六十进制转十进制\n2. 度的十进制转六十进制\n3. 求三角函数值\n"
 			"4. 求起始和末位的坐标方位角\n5. 求导线的总长\n6. 求每一站的坐标方位角\n"
 			"7. 改正后的每一站的坐标方位角\n8. 求d_x_y的值\n9. 求f_x和f_y\n"
 			"10. 求全长闭合差和全长相对闭合差\n11. 求改正之后的d_x_y\n"
@@ -290,6 +292,22 @@ int main()
 		cin >> input;
 		switch (input)
 		{
+		case 0:
+			cout << "请输入新的数" << endl;
+			cin >> N;
+			distance = new double[N];
+			Decimal_degrees = new double[N];
+			every_position = new double[N];
+			correct_every_position = new double[N];
+			correct_d_x = new double[N];
+			correct_d_y = new double[N];
+			d_x = new double[N];
+			d_y = new double[N];
+			lx = new long double[N];
+			ly = new long double[N];
+			s = new double[N];
+			m = new double[N];
+			d = new double[N];
 		case 1:
 			cout << "按顺序输入，并用空格隔开" << endl;
 			for (int i = 0; i < N; ++i)
