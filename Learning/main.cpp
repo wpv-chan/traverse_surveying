@@ -310,6 +310,7 @@ int main()
 			s = new double[N];
 			m = new double[N];
 			d = new double[N];
+			break;
 		case 1:
 			cout << "按顺序输入，并用空格隔开" << endl;
 			for (int i = 0; i < N; ++i)
