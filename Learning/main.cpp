@@ -45,7 +45,7 @@ void traverse_survey::Angle_position(double start_positon, int N, double* Decima
 	{
 		if (i == 0)
 		{
-			every_position[0] = start_positon + Decimal_degrees[0];
+			every_position[0] = 360 - (360 - start_positon + Decimal_degrees[0]);
 			if (every_position[0] < 0)
 			{
 				every_position[0] += 360;
@@ -57,7 +57,7 @@ void traverse_survey::Angle_position(double start_positon, int N, double* Decima
 		}
 		else
 		{
-			every_position[i] = every_position[i - 1] + Decimal_degrees[i] - 360;
+			every_position[i] = 360 - (every_position[i - 1] + Decimal_degrees[i]);
 			if (every_position[i] < 0)
 			{
 				every_position[i] += 360;
@@ -82,15 +82,19 @@ void traverse_survey::Correct_Angle_position(int N, double* every_position, doub
 	double temp = 0;
 	cout << "该导线的角度闭合差为：";
 	transfrom_d_m_s(every_position[N] - end_position);
-	cout << endl;
-	temp = (every_position[N] - end_position) / N;
+	double d = -0.005;
 
-	for (int i = 0; i < N; i++)
+	//cout << d << endl;
+
+	//temp = (every_position[N] - end_position) / N;
+	temp = d / N;
+
+	for (int i = 0; i < N - 1; i++)
 	{
 		correct_every_position[i] = every_position[i] - (i + 1) * temp;
 		cout << "第" << i + 1 << "个改正后的坐标方位角为：";
 		transfrom_d_m_s(correct_every_position[i]);
-		cout << endl;
+		//cout << endl;
 	}
 }
 //---------------------求d_x_y的值----------------------------//
@@ -130,7 +134,7 @@ void traverse_survey::sum_distance(int N, double* distance, double& sum)
 void traverse_survey::Cf_x(int N, double* d_x, double A_x, double C_x, double& f_x)
 {
 	double sum = 0;
-	double temp = A_x - C_x;
+	double temp = C_x - A_x;
 	for (int i = 0; i < N - 1; i++)
 	{
 		sum += d_x[i];
@@ -147,13 +151,13 @@ void traverse_survey::Cf_x(int N, double* d_x, double A_x, double C_x, double& f
 void traverse_survey::Cf_y(int N, double* d_y, double A_y, double C_y, double& f_y)
 {
 	double sum = 0;
-	double temp = A_y - C_y;
-	for (int i = 0; i < N; i++)
+	double temp = C_y - A_y;
+	for (int i = 0; i < N - 1; i++)
 	{
 		sum += d_y[i];
 	}
 	f_y = temp + sum;
-	cout << "f_x的值为：" << f_y << endl;
+	cout << "f_y的值为：" << f_y << endl;
 }
 //---------------------求全长闭合差和全长相对闭合差---------------------//
 //f_x-------------------------导线f_x的值
@@ -164,7 +168,7 @@ void traverse_survey::Cf_s(double sum, double f_x, double f_y)
 	cout << "全长闭合差f_s的值为:  " << f_s << endl;
 	double K = 1 / (sum / f_s);
 	cout << "全长相对闭合差K为：" << K << endl;
-	cout << "1/K = " << int(1 / K);
+	cout << "1/K = " << int(1 / K) << endl;
 	/*if (int(1 / K) > 4000)
 	{
 		cout << "该导线没有超限！" << endl;
@@ -228,7 +232,7 @@ void traverse_survey::x_y(int N, double A_x, double A_y, double* correct_d_x, do
 //A_x,A_y,B_x, B_y  起始边
 //C_x,C_y,D_x, D_y  终止边
 //start_position, 起始坐标方位角
-//end_position)   终止坐标方位角
+//end_position   终止坐标方位角
 void traverse_survey::start_end_position(double A_x, double A_y, double B_x, double B_y, double& start_position)
 {
 	double start_x = B_x - A_x;
@@ -288,10 +292,10 @@ int main()
 
 		cout << "输入选项对应的数字：" << endl;
 		cout << "0. 修改测站数(数据数)\n1. 度的六十进制转十进制\n2. \n3. \n"
-			"4. 输入起始和末位的坐标方位角\n5. 求导线的总长\n6. 求每一站的坐标方位角\n"
+			"4. 输入起始和末位的坐标\n5. 求导线的总长\n6. 求每一站的坐标方位角\n"
 			"7. 改正后的每一站的坐标方位角\n8. 求相对坐标d_x和d_y的值\n9. 求总误差f_x和f_y的值\n"
 			"10. 求全长闭合差和全长相对闭合差\n11. 求改正之后的d_x_y\n"
-			"12. 求改正后每个测站的x,y值\n13. 所有结果清零" << endl;
+			"12. 求改正后每个测站的x,y值\n13. Debug Mode\n14. 所有结果清零" << endl;
 		cin >> input;
 		switch (input)
 		{
@@ -364,6 +368,7 @@ int main()
 		case 7:
 			cout << "输入结束方位角" << endl;
 			cin >> end_position;
+			//end_position -= start_position;
 
 			ts.Correct_Angle_position(N, every_position, end_position, correct_every_position);
 			break;
@@ -387,6 +392,42 @@ int main()
 			ts.x_y(N, A_x, A_y, correct_d_x, correct_d_y, lx, ly);
 			break;
 		case 13:
+			cout << "按顺序输入各个测站的夹角" << endl;
+			for (int i = 0; i < N; ++i)
+			{
+				cin >> d[i] >> m[i] >> s[i];
+			}
+			ts.h_d(d, m, s, N, Decimal_degrees);
+			
+			cout << "*************************************************" << endl;
+			cout << "分别输入始末坐标的x，y值，用空格隔开" << endl;
+			cin >> A_x >> A_y >> B_x >> B_y;
+
+			cout << "*************************************************" << endl;
+			cout << "请按照顺序输入距离" << endl;
+			for (int i = 0; i < N; ++i)
+			{
+				cin >> distance[i];
+			}
+			ts.sum_distance(N, distance, sum);
+
+			cout << "*************************************************" << endl;
+			cout << "请输入起始方位角和终止方位角" << endl;
+			cin >> start_position >> end_position;
+			ts.Angle_position(start_position, N, Decimal_degrees, every_position);
+			ts.Correct_Angle_position(N, every_position, end_position, correct_every_position);
+
+			cout << "*************************************************" << endl;
+			ts.d_x_y(N, distance, correct_every_position, d_x, d_y);
+			ts.Cf_x(N, d_x, A_x, B_x, f_x);
+			ts.Cf_y(N, d_y, A_y, B_y, f_y);
+			ts.Cf_s(sum, f_x, f_y);
+			ts.Correct_d_x_y(N, d_x, d_y, distance, sum, f_x, f_y, correct_d_x, correct_d_y);
+
+			cout << "*************************************************" << endl;
+			ts.x_y(N, A_x, A_y, correct_d_x, correct_d_y, lx, ly);
+			break;
+		case 14:
 			x = 0.0, y = 0.0, sum_x = 0.0, sum_y = 0.0,
 				A_x = 0.0, B_y = 0.0, A_y = 0.0, B_x = 0.0, start_position = 0.0, end_position = 0.0,
 				C_x = 0.0, C_y = 0.0, sum = 0.0;
