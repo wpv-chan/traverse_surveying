@@ -81,9 +81,9 @@ void traverse_survey::Correct_Angle_position(int N, double* every_position, doub
 {
 	double temp = 0;
 	cout << "该导线的角度闭合差为：";
-	transfrom_d_m_s(every_position[N - 1] - end_position);
+	transfrom_d_m_s(every_position[N] - end_position);
 	cout << endl;
-	temp = (every_position[N - 1] - end_position) / N;
+	temp = (every_position[N] - end_position) / N;
 
 	for (int i = 0; i < N; i++)
 	{
@@ -101,7 +101,7 @@ void traverse_survey::Correct_Angle_position(int N, double* every_position, doub
 //*d_y---------------------------------------存储每一站的d_y
 void traverse_survey::d_x_y(int N, double* distance, double* correct_every_position, double* d_x, double* d_y)
 {
-	for (int i = 0; i < N; i++)
+	for (int i = 0; i < N - 1; i++)
 	{
 		d_x[i] = distance[i] * cos(correct_every_position[i] * (pi / 180));
 		d_y[i] = distance[i] * sin(correct_every_position[i] * (pi / 180));
@@ -148,7 +148,7 @@ void traverse_survey::Cf_y(int N, double* d_y, double A_y, double C_y, double& f
 {
 	double sum = 0;
 	double temp = A_y - C_y;
-	for (int i = 0; i < N - 1; i++)
+	for (int i = 0; i < N; i++)
 	{
 		sum += d_y[i];
 	}
@@ -185,9 +185,9 @@ void traverse_survey::Cf_s(double sum, double f_x, double f_y)
 //f_y--------------------------f_y的值
 void traverse_survey::Correct_d_x_y(int N, double* d_x, double* d_y, double* distance, double sum, double f_x, double f_y, double* correct_d_x, double* correct_d_y)
 {
-	double* temp_x = new double[N]{ 0 };        
-	double* temp_y = new double[N]{ 0 };
-	for (int i = 0; i < N; i++)
+	double* temp_x = new double[N - 1]{ 0 };        
+	double* temp_y = new double[N - 1]{ 0 };
+	for (int i = 0; i < N - 1; i++)
 	{
 		temp_x[i] = f_x * (distance[i] / sum);
 		temp_y[i] = f_y * (distance[i] / sum);
@@ -288,7 +288,7 @@ int main()
 
 		cout << "输入选项对应的数字：" << endl;
 		cout << "0. 修改测站数(数据数)\n1. 度的六十进制转十进制\n2. \n3. \n"
-			"4. 求起始和末位的坐标方位角\n5. 求导线的总长\n6. 求每一站的坐标方位角\n"
+			"4. 输入起始和末位的坐标方位角\n5. 求导线的总长\n6. 求每一站的坐标方位角\n"
 			"7. 改正后的每一站的坐标方位角\n8. 求相对坐标d_x和d_y的值\n9. 求总误差f_x和f_y的值\n"
 			"10. 求全长闭合差和全长相对闭合差\n11. 求改正之后的d_x_y\n"
 			"12. 求改正后每个测站的x,y值\n13. 所有结果清零" << endl;
@@ -336,7 +336,7 @@ int main()
 		case 4:
 			cout << "分别输入前后的x，y值，用空格隔开" << endl;
 			cin >> A_x >> A_y >> B_x >> B_y;
-			ts.start_end_position(A_x, A_y, B_x, B_y, start_position);
+			//ts.start_end_position(A_x, A_y, B_x, B_y, start_position);
 			break;
 		case 5:
 			cout << "请按照顺序输入距离" << endl;
