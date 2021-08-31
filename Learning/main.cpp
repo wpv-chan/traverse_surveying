@@ -21,6 +21,7 @@ void traverse_survey::h_d(double* d, double* m, double* s, int N, double* Decima
 	for (int i = 0; i < N; i++)
 	{
 		Decimal_degrees[i] = d[i] + m[i] / 60 + s[i] / 3600;
+		cout << "第" << i + 1 << "个夹角为：" << Decimal_degrees[i] << endl;
 	}
 }
 //------------------十进制度 转化为度分秒输出------------------------//
@@ -184,9 +185,9 @@ void traverse_survey::Cf_s(double sum, double f_x, double f_y)
 //f_y--------------------------f_y的值
 void traverse_survey::Correct_d_x_y(int N, double* d_x, double* d_y, double* distance, double sum, double f_x, double f_y, double* correct_d_x, double* correct_d_y)
 {
-	double* temp_x = new double[N - 1]{ 0 };        //动态的创建一个数组
-	double* temp_y = new double[N - 1]{ 0 };
-	for (int i = 0; i < N - 1; i++)
+	double* temp_x = new double[N]{ 0 };        
+	double* temp_y = new double[N]{ 0 };
+	for (int i = 0; i < N; i++)
 	{
 		temp_x[i] = f_x * (distance[i] / sum);
 		temp_y[i] = f_y * (distance[i] / sum);
@@ -266,19 +267,19 @@ int main()
 	cin >> N;
 
 	//initialize
-	distance = new double[N];
-	Decimal_degrees = new double[N];
-	every_position = new double[N];
-	correct_every_position = new double[N];
-	correct_d_x = new double[N];
-	correct_d_y = new double[N];
-	d_x = new double[N];
-	d_y = new double[N];
-	lx = new long double[N];
-	ly = new long double[N];
-	s = new double[N];
-	m = new double[N];
-	d = new double[N];
+	distance = new double[N] { 0 };
+	Decimal_degrees = new double[N] { 0 };
+	every_position = new double[N] { 0 };
+	correct_every_position = new double[N] { 0 };
+	correct_d_x = new double[N] { 0 };
+	correct_d_y = new double[N] { 0 };
+	d_x = new double[N] { 0 };
+	d_y = new double[N] { 0 };
+	lx = new long double[N] { 0 };
+	ly = new long double[N] { 0 };
+	s = new double[N] { 0 };
+	m = new double[N] { 0 };
+	d = new double[N] { 0 };
 
 	cout << fixed << setprecision(4);
 
@@ -286,30 +287,30 @@ int main()
 	{
 
 		cout << "输入选项对应的数字：" << endl;
-		cout << "0. 修改测站数(数据数)\n1. 度的六十进制转十进制\n2. 度的十进制转六十进制\n3. 求三角函数值\n"
+		cout << "0. 修改测站数(数据数)\n1. 度的六十进制转十进制\n2. \n3. \n"
 			"4. 求起始和末位的坐标方位角\n5. 求导线的总长\n6. 求每一站的坐标方位角\n"
-			"7. 改正后的每一站的坐标方位角\n8. 求d_x_y的值\n9. 求f_x和f_y\n"
+			"7. 改正后的每一站的坐标方位角\n8. 求相对坐标d_x和d_y的值\n9. 求总误差f_x和f_y的值\n"
 			"10. 求全长闭合差和全长相对闭合差\n11. 求改正之后的d_x_y\n"
-			"12. 求x,y\n13. 所有结果清零" << endl;
+			"12. 求改正后每个测站的x,y值\n13. 所有结果清零" << endl;
 		cin >> input;
 		switch (input)
 		{
 		case 0:
 			cout << "请输入新的数" << endl;
 			cin >> N;
-			distance = new double[N];
-			Decimal_degrees = new double[N];
+			distance = new double[N] { 0 };
+			Decimal_degrees = new double[N] { 0 };
 			every_position = new double[N];
-			correct_every_position = new double[N];
-			correct_d_x = new double[N];
-			correct_d_y = new double[N];
-			d_x = new double[N];
-			d_y = new double[N];
-			lx = new long double[N];
-			ly = new long double[N];
-			s = new double[N];
-			m = new double[N];
-			d = new double[N];
+			correct_every_position = new double[N] { 0 };
+			correct_d_x = new double[N] { 0 };
+			correct_d_y = new double[N] { 0 };
+			d_x = new double[N] { 0 };
+			d_y = new double[N] { 0 };
+			lx = new long double[N] { 0 };
+			ly = new long double[N] { 0 };
+			s = new double[N] { 0 };
+			m = new double[N] { 0 };
+			d = new double[N] { 0 };
 			break;
 		case 1:
 			cout << "按顺序输入，并用空格隔开" << endl;
@@ -349,14 +350,14 @@ int main()
 			cout << "请输入起始方位角" << endl;
 			cin >>start_position;
 
-			cout << "请输入起始坐标" << endl;
-			cin >> A_x >> A_y;
+			//cout << "请输入起始坐标" << endl;
+			//cin >> A_x >> A_y;
 
-			cout << "请按顺序输入夹角" << endl;
+			/*cout << "请按顺序输入夹角" << endl;
 			for (int i = 0; i < N; ++i)
 			{
 				cin >> Decimal_degrees[i];
-			}
+			}*/
 
 			ts.Angle_position(start_position, N, Decimal_degrees, every_position);
 			break;
@@ -370,11 +371,11 @@ int main()
 			ts.d_x_y(N, distance, correct_every_position, d_x, d_y);
 			break;
 		case 9:
-			cout << "输入结束点的坐标" << endl;
-			cin >> C_x >> C_y;
+			//cout << "输入结束点的坐标" << endl;
+			//cin >> C_x >> C_y;
 
-			ts.Cf_x(N, d_x, A_x, C_x, f_x);
-			ts.Cf_y(N, d_y, A_y, C_y, f_y);
+			ts.Cf_x(N, d_x, A_x, B_x, f_x);
+			ts.Cf_y(N, d_y, A_y, B_y, f_y);
 			break;
 		case 10:
 			ts.Cf_s(sum, f_x, f_y);
