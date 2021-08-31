@@ -45,7 +45,7 @@ void traverse_survey::Angle_position(double start_positon, int N, double* Decima
 	{
 		if (i == 0)
 		{
-			every_position[0] = 360 - (360 - start_positon + Decimal_degrees[0]);
+			every_position[0] = start_positon + Decimal_degrees[0] + 180;
 			if (every_position[0] < 0)
 			{
 				every_position[0] += 360;
@@ -57,7 +57,7 @@ void traverse_survey::Angle_position(double start_positon, int N, double* Decima
 		}
 		else
 		{
-			every_position[i] = 360 - (every_position[i - 1] + Decimal_degrees[i]);
+			every_position[i] = every_position[i - 1] + Decimal_degrees[i] + 180;
 			if (every_position[i] < 0)
 			{
 				every_position[i] += 360;
@@ -81,13 +81,8 @@ void traverse_survey::Correct_Angle_position(int N, double* every_position, doub
 {
 	double temp = 0;
 	cout << "该导线的角度闭合差为：";
-	transfrom_d_m_s(every_position[N] - end_position);
-	double d = -0.005;
-
-	//cout << d << endl;
-
-	//temp = (every_position[N] - end_position) / N;
-	temp = d / N;
+	transfrom_d_m_s(every_position[N - 1] - end_position);
+	temp = (every_position[N - 1] - end_position) / N;
 
 	for (int i = 0; i < N - 1; i++)
 	{
@@ -134,7 +129,7 @@ void traverse_survey::sum_distance(int N, double* distance, double& sum)
 void traverse_survey::Cf_x(int N, double* d_x, double A_x, double C_x, double& f_x)
 {
 	double sum = 0;
-	double temp = C_x - A_x;
+	double temp = A_x - C_x;
 	for (int i = 0; i < N - 1; i++)
 	{
 		sum += d_x[i];
@@ -151,7 +146,7 @@ void traverse_survey::Cf_x(int N, double* d_x, double A_x, double C_x, double& f
 void traverse_survey::Cf_y(int N, double* d_y, double A_y, double C_y, double& f_y)
 {
 	double sum = 0;
-	double temp = C_y - A_y;
+	double temp = A_y - C_y;
 	for (int i = 0; i < N - 1; i++)
 	{
 		sum += d_y[i];
