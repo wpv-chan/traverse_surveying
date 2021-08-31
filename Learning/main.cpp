@@ -10,6 +10,12 @@ traverse_survey::~traverse_survey()
 {
 	cout << "-----------------------结束---------------------------" << endl;
 }
+double traverse_survey::correct_precision(double origin)
+{
+	origin = (int)(origin * 10000);
+	origin /= 10000;
+	return origin;
+}
 //------------------  把观测的度分秒转化了十进制的度使用------------------------//
 //*d----------------输入的度
 //*m----------------输入的分
@@ -20,7 +26,8 @@ void traverse_survey::h_d(double* d, double* m, double* s, int N, double* Decima
 {
 	for (int i = 0; i < N; i++)
 	{
-		Decimal_degrees[i] = d[i] + m[i] / 60 + s[i] / 3600;
+		Decimal_degrees[i] = d[i] + m[i] / 60.0 + s[i] / 3600.0;
+		Decimal_degrees[i] = correct_precision(Decimal_degrees[i]);
 		cout << "第" << i + 1 << "个夹角为：" << Decimal_degrees[i] << endl;
 	}
 }
@@ -31,7 +38,7 @@ void traverse_survey::transfrom_d_m_s(double Decimal_degrees)
 	double d = 0, m = 0, s = 0;
 	d = int(Decimal_degrees);
 	m = int((Decimal_degrees - d) * 60);
-	s = (Decimal_degrees - d - m / 60) * 3600;
+	s = int((Decimal_degrees - d - m / 60) * 3600);
 	cout << d << "°" << m << "′" << s << "″" << endl;
 }
 //------------------求每一站的坐标方位角-和角度闭合差--------------------------//
@@ -45,7 +52,8 @@ void traverse_survey::Angle_position(double start_positon, int N, double* Decima
 	{
 		if (i == 0)
 		{
-			every_position[0] = start_positon + Decimal_degrees[0] + 180;
+			every_position[0] = correct_precision(start_positon) + Decimal_degrees[0] + 180;
+			every_position[0] = correct_precision(every_position[0]);
 			if (every_position[0] < 0)
 			{
 				every_position[0] += 360;
@@ -58,6 +66,7 @@ void traverse_survey::Angle_position(double start_positon, int N, double* Decima
 		else
 		{
 			every_position[i] = every_position[i - 1] + Decimal_degrees[i] + 180;
+			every_position[i] = correct_precision(every_position[i]);
 			if (every_position[i] < 0)
 			{
 				every_position[i] += 360;
@@ -191,10 +200,10 @@ void traverse_survey::Correct_d_x_y(int N, double* d_x, double* d_y, double* dis
 		temp_x[i] = f_x * (distance[i] / sum);
 		temp_y[i] = f_y * (distance[i] / sum);
 		cout << "-----------------------------------------------------------------" << endl;
-		cout << "第" << i + 1 << "个的" << "改正数d_x和d_y的值为：" << temp_x[i] << ", " << temp_y[i] << endl;
+		cout << "第" << i + 1 << "个的" << "改正数v_x和v_y的值为：" << temp_x[i] << ", " << temp_y[i] << endl;
 		correct_d_x[i] = d_x[i] - temp_x[i];
 		correct_d_y[i] = d_y[i] - temp_y[i];
-		cout << "第" << i + 1 << "个的" << "改正之后的dx和dy的值为：" << correct_d_x[i] << ", " << correct_d_y[i] << endl;
+		cout << "第" << i + 1 << "个的" << "改正之后的d_x和d_y的值为：" << correct_d_x[i] << ", " << correct_d_y[i] << endl;
 	}
 }
 //-------------------------------------求x,y--------------------------------//;

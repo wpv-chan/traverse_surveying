@@ -20,6 +20,6 @@ public:
 	void Cf_s(double sum, double f_x, double f_y); //求全长闭合差和全长相对闭合差
 	void Correct_d_x_y(int N, double* d_x, double* d_y, double* distance, double sum, double f_x, double f_y, double* correct_d_x, double* correct_d_y);//求改正之后的d_x_y
 	void x_y(int N, double A_x, double A_y, double* correct_d_x, double* correct_d_y, long double* lx, long double* ly);//求x,y;
-
+	double correct_precision(double origin); //控制double的精度
 };
 
